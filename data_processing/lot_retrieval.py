@@ -8,6 +8,10 @@ import re
 import json
 import requests
 
+from shapely.geometry import shape, mapping, Polygon, MultiPolygon
+from shapely.validation import make_valid
+from shapely.ops import unary_union
+
 PRN_URL = "https://parkingreform.org/parking-lot-map/"
 
 def extract_geojson_from_js(text: str):
@@ -143,6 +147,34 @@ def retrieve_lots(text: str):
 
     return geojson
 
+def validate_geometry(geojson: dict):
+    """
+    Take a GeoJSON dict and make the geometries valid. This is an issue that arises, for example, when a polygon is not closed.
+
+    Args:
+        geojson (dict): a GeoJSON dict.
+    
+    Returns:
+        geojson (dict): the same GeoJSON with all valid geometries.
+    """
+
+    # Loop through every feature
+    for feature in geojson["features"]:
+        geom = shape(feature["geometry"])
+
+        # if the geometry is not valid, make it valid
+        if not geom.is_valid:
+            fixed_geom = make_valid(geom)
+
+            # if the valid geometry created includes polygons and linestrings / points, we only care about the polygons
+            if fixed_geom.geom_type == "GeometryCollection":
+                polygons = [g for g in fixed_geom.geoms if isinstance(g, (Polygon, MultiPolygon))]
+                fixed_geom = unary_union(polygons)
+
+            feature["geometry"] = mapping(fixed_geom)
+
+    return geojson
+
 def main():
     """
     Retrieve the Central City boundaries and parking lot locations for each city.
@@ -164,8 +196,11 @@ def main():
     lots_geojson = retrieve_lots(html)
 
     # Flatten the coordinates from X,Y,Z to X,Y
-    output_boundaries = flatten_geojson(city_boundaries_geojson[0])
+    flattened_boundaries = flatten_geojson(city_boundaries_geojson[0])
     output_lots = flatten_geojson(lots_geojson)
+
+    # The boundary file had one issue with valid geometries
+    output_boundaries = validate_geometry(flattened_boundaries)
 
     # Write the outputs to data folder
     output_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'lots')
