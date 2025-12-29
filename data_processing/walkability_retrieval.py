@@ -1,13 +1,13 @@
 # This script loads and filters EPA National Walkability Index data at the US Census Block Group level.
 #   - The data is available for download at: https://catalog.data.gov/dataset/walkability-index8
 #   - The methodology used to score each block group is provided at: https://www.epa.gov/sites/default/files/2021-06/documents/national_walkability_index_methodology_and_user_guide_june2021.pdf
+#   - Requires having loaded in the parking lot boundaries
 
 import os
 from pyogrio.errors import DataSourceError
-import pandas as pd
 import geopandas as gpd
 
-# The downloaded file is saved in the below file path
+# The downloaded files are saved in the below file path
 WALKABILITY_PATH = "data/source_data/WalkabilityIndex/Natl_WI.gdb"
 PARKING_BOUNDARY_PATH = "data/lots/city_boundaries.geojson"
 
@@ -16,10 +16,10 @@ def load_walkability_index():
     Load the walkability data. Filter the resulting data to the block groups overlapping the parking lot boundaries.
     
     Returns:
-        walk_index_filtered (Data.Frame): the GeoPandas Data Frame of walk index data for each Census Block Group.
+        walk_index_filtered (DataFrame): the GeoPandas Data Frame of walk index data for each Census Block Group.
     """
 
-    # Load transportation to work data
+    # Load data
     walk_index = gpd.read_file(WALKABILITY_PATH, layer='NationalWalkabilityIndex')
 
     # Filter the block groups to only those which overlap the parking lot boundaries

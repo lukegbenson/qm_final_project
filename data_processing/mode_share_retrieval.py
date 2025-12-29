@@ -19,7 +19,7 @@ def load_mode_share():
     Filter the resulting data to the block groups overlapping the parking lot boundaries.
     
     Returns:
-        car_share_filtered (Data.Frame): the GeoPandas Data Frame of car share and total trips for each Census Block Group.
+        car_share_filtered (DataFrame): the GeoPandas Data Frame of car share and total trips for each Census Block Group.
     """
 
     # Load transportation to work data
