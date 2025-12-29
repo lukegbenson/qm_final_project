@@ -208,6 +208,10 @@ def main():
     boundaries_file = os.path.join(clean_path, "city_boundaries.geojson")
     lots_file = os.path.join(clean_path, "city_lots.geojson")
 
+    # Create folder if it does not exist
+    if not os.path.exists(clean_path):
+        os.makedirs(clean_path)
+
     # Write the boundaries file
     with open(boundaries_file, 'w') as f:
         json.dump(output_boundaries, f, indent=4)
