@@ -26,8 +26,12 @@ def load_mode_share():
     mode_share = pd.read_csv(MODE_SHARE_PATH, header=1)
 
     # Create car trip share column
-    mode_share.rename(columns = {"Estimate!!Total:": "total_trips", "Geography": "geo_id"} , inplace=True)
-    mode_share["car_trip_share"] = mode_share["Estimate!!Total:!!Car, truck, or van:"] / mode_share["total_trips"]
+    mode_share.rename(columns = {
+            "Estimate!!Total:": "total_trips",
+            "Estimate!!Total:!!Car, truck, or van:": "car_trips",
+            "Geography": "geo_id"
+        },
+        inplace=True)
 
     # Load Block Group data
     bgs = gpd.read_file(BLOCK_GROUP_PATH)
@@ -46,7 +50,7 @@ def load_mode_share():
         car_share_filtered = gpd.sjoin(car_share, boundaries, how='inner', predicate='intersects')
 
         # Select the needed columns
-        car_share_filtered = car_share_filtered[["geo_id", "total_trips", "car_trip_share", "geometry"]]
+        car_share_filtered = car_share_filtered[["geo_id", "total_trips", "car_trips", "geometry"]]
 
         return car_share_filtered
 
