@@ -5,8 +5,11 @@ How well can we explain car usage in US cities using solely the footprint of the
 ## Source Datasets
 
 [Parking Reform Network](https://parkingreform.org/): Parking lot locations and city boundaries. The foundational dataset for this analysis.
+
 [ACS Means of Transporation to Work](https://data.census.gov/table?q=b08301&g=010XX00US$1500000): Data for car trip shares.
+
 [US Census Shapefiles](https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html): Geometries for the 2020 US Census block groups.
+
 [EPA Walkability Metric](https://catalog.data.gov/dataset/walkability-index8): Walk scores for 2010 US Census block groups.
 
 ## Folder Structure
