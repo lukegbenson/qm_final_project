@@ -36,6 +36,12 @@ def load_mode_share():
     # Load Block Group data
     bgs = gpd.read_file(BLOCK_GROUP_PATH)
 
+    bgs.rename(columns = {
+            "ALAND": "land_area",
+            "AWATER": "water_area",
+        },
+        inplace=True)
+
     # Merge data sets
     car_share = bgs.merge(mode_share, left_on='GEOIDFQ', right_on="geo_id", how='left')
 
@@ -50,7 +56,7 @@ def load_mode_share():
         car_share_filtered = gpd.sjoin(car_share, boundaries, how='inner', predicate='intersects')
 
         # Select the needed columns
-        car_share_filtered = car_share_filtered[["geo_id", "total_trips", "car_trips", "geometry"]]
+        car_share_filtered = car_share_filtered[["geo_id", "total_trips", "car_trips", "land_area", "water_area", "geometry"]]
 
         return car_share_filtered
 
