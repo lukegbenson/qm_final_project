@@ -13,7 +13,8 @@ CAR_SHARE_PATH = "data/filtered_block_groups/car_share.geojson"
 
 def create_model_data():
     """
-    
+    Take the parking lot feature data and add the desired outcome variable, car trip share.
+
     Returns:
         model_data (DataFrame): the GeoPandas Data Frame used for modeling.
     """
