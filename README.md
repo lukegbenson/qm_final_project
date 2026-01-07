@@ -10,7 +10,7 @@ How well can we explain car usage in US cities using solely the footprint of the
 
 [US Census Shapefiles](https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html): Geometries for the 2020 US Census block groups.
 
-[EPA Walkability Metric](https://catalog.data.gov/dataset/walkability-index8): Walk scores for 2010 US Census block groups. Not ultimately used for analysis given that the logic fopr walk scores breaks down at smaller geographic areas.
+[EPA Walkability Metric](https://catalog.data.gov/dataset/walkability-index8): Walk scores for 2010 US Census block groups. Not ultimately used for analysis given that the logic for walk scores breaks down at smaller geographic areas.
 
 ## Folder Structure
 ```text
