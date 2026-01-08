@@ -71,7 +71,7 @@ def plot_city_lot_map(
         0.5, buffer, 
         caption,
         ha="center", 
-        fontsize=20, 
+        fontsize=26, 
         style='italic',
         wrap=True
     )
@@ -125,10 +125,10 @@ def plot_rose_diagram(
     ax.set_xticklabels(["E", "NE", "N", "NW", "W", "SW", "S", "SE"])
 
     fig.text(
-        0.5, 0.04, 
+        0.5, 0.01, 
         caption,
         ha="center", 
-        fontsize=14, 
+        fontsize=20, 
         style='italic',
         wrap=True
     )
