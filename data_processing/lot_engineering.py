@@ -58,11 +58,11 @@ def add_geo_features(lot_data: gpd.GeoDataFrame):
     # Add feature: % of central city taken up by parking
     lot_data["pct_lot_area"] = lot_data["total_lot_area"] / lot_data["boundary_area"]
 
-    # Add feature: number of parking lots per km^2
-    lot_data["lots_per_sq_km"] = 1000 * lot_data["num_lots"] / lot_data["boundary_area"]
+    # Add feature: number of parking lots per hectare
+    lot_data["lots_per_hectare"] = 10000 * lot_data["num_lots"] / lot_data["boundary_area"]
 
     # Add feature: average lot area
-    lot_data["avg_lot_area"] = lot_data.geometry.apply(lambda geom: np.mean([poly.area for poly in geom.geoms]) if hasattr(geom, 'geoms') else geom.area) / 1000
+    lot_data["avg_lot_area"] = lot_data.geometry.apply(lambda geom: np.mean([poly.area for poly in geom.geoms]) if hasattr(geom, 'geoms') else geom.area) / 10000
 
     return lot_data
 
